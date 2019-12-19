@@ -1,0 +1,46 @@
+<%- include("../partials/header") %> 
+
+ <div class="container">
+     <header class="jumbotron">
+         <div class="container">
+             <h1>Chat Menu:</h1>
+         </div>
+     </header>
+     
+    <div class="col-md-6">
+        <p>
+            <a class="btn btn-success btn-large" href="/chatMenu/new">Create new Chat...</a>
+        </p>
+        <p> My Chats: </p>
+        <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+            <% chats.forEach(function(chat){ %>
+                <% if(chat.member1.username == currentUser.username){ %>
+                    <p>
+                        <a href="/chatMenu/<%= chat._id %>" class="btn btn-primary"><%=chat.member2.username%></a>
+                    </p>
+                <% } else {%>
+                    <p>
+                        <a href="/chatMenu/<%= chat._id %>" class="btn btn-primary"><%=chat.member1.username%></a>
+                    </p>
+                <% }}); %>
+        </div>
+    </div>     
+
+    <div class="col-md-6">
+        <p> Logged Users: </p>
+        <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+            <% users.forEach(function(user){ %>
+                <% if(user.online && user.username!=currentUser.username){ %>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="thumbnail">
+                        <p> <%=user.username%> </p>
+                        </div>
+                    </div>
+                <% } %>
+            <% }); %>
+        </div>
+    </div>
+</div>
+
+<%- include("../partials/footer") %>
+  

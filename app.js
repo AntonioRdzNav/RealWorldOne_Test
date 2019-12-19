@@ -11,7 +11,7 @@ var express     = require("express"),
 
 //requiring routes
 var indexRoutes      = require("./routes/index"),
-    chatRoutes       = require("./routes/chat");
+    chatMenuRoutes       = require("./routes/chatMenu");
 
 // standard setup
 mongoose.connect("mongodb://localhost/realworld_test");
@@ -43,7 +43,10 @@ app.use(function(req, res, next){
 
 
 app.use("/", indexRoutes);
-app.use("/chat", chatRoutes);
+app.use("/chatMenu", chatMenuRoutes);
+app.get('*', function(req, res) {
+    res.redirect('/');
+});
 
 
 // set connection

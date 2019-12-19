@@ -15,15 +15,15 @@ router.get("/register", function(req, res){
 
 // handle sign up logic
 router.post("/register", function(req, res){
-    var newUser = new User({username: req.body.username});
+    var newUser = new User({username: req.body.username, online:false});
     User.register(newUser, req.body.password, function(err, user){
         if(err){
             req.flash("error", err.message);
             return res.redirect("/register");
         }
         passport.authenticate("local")(req, res, function(){
-           req.flash("success", "Welcome to TestChat " + user.username);
-           res.redirect("/chat"); 
+            req.flash("success", "Welcome to TestChat " + user.username);
+            res.redirect("/chat"); 
         });
     });
 });
@@ -40,14 +40,21 @@ router.post("/login", passport.authenticate('local',
         successFlash: 'Welcome!',
         failureRedirect: '/login',
         failureFlash: true 
-    })
-);
+    }
+));
 
 // logout route
 router.get("/logout", function(req, res){
-   req.logout();
-   req.flash("success", "Logged you out!");
-   res.redirect("/");
+    // TODO:
+        // Can be improved using the user session to set online to false 
+        // without the need of pressing "Log out"
+    User.findById(req.user._id, function (err, foundUser) {
+        foundUser.online = false;
+        foundUser.save();
+    });        
+    req.logout();
+    req.flash("success", "Logged you out!");
+    res.redirect("/");
 });
 
 module.exports = router;

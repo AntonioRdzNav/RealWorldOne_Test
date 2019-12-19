@@ -1,3 +1,8 @@
 #delete-form{
     display: inline-block;
 }
+
+#textMessage{
+    resize: none;
+}
+

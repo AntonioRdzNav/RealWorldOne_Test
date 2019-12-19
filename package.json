@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/AntonioRdzNav/RealWorldOne_Test#readme",
   "dependencies": {
+    "aylien_textapi": "^0.7.0",
     "body-parser": "^1.19.0",
     "connect-flash": "^0.1.1",
     "ejs": "^3.0.1",

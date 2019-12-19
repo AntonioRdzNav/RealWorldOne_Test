@@ -4,6 +4,13 @@ var Chat = require("../models/chat");
 var Message = require("../models/message");
 var middleware = require("../middlewares");
 
+AYLIENTextAPI   = require('aylien_textapi');
+// ALYIEN API CONFIGURATION
+var textapi = new AYLIENTextAPI({
+    application_id: "a4bec524",  
+    application_key: "5e4f7f2c12c69cb185e52c0581901abe"
+});
+
 
 //Message Create
 router.post("/", [middleware.isLoggedIn, middleware.checkChatOwnership],function(req, res){
@@ -18,15 +25,21 @@ router.post("/", [middleware.isLoggedIn, middleware.checkChatOwnership],function
                req.flash("error", "Something went wrong");
                console.log(err);
            } else {
-                //add username and id to message
-                var newAuthor = {id:req.user._id, username:req.user.username}
-                message.author = newAuthor;
-                //save comment
-                message.save();
-                chat.messages.push(message);
-                chat.save();
-                req.flash("success", "Successfully added message");
-                res.redirect('/chat/' + chat._id);
+                // clasify sentiment of text
+                textapi.sentiment({"text": message.text}, function(error, response) {
+                    if (error === null) {
+                        //add username and id to message
+                        var newAuthor = {id:req.user._id, username:req.user.username}
+                        message.author = newAuthor;
+                        message.sentiment = response.polarity;
+                        //save comment
+                        message.save();
+                        chat.messages.push(message);
+                        chat.save();
+                        req.flash("success", "Successfully added message");
+                        res.redirect('/chat/' + chat._id);                
+                    }
+                });
            }
         });
        }

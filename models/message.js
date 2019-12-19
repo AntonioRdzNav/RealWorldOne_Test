@@ -2,6 +2,7 @@ var mongoose = require("mongoose");
 
 var messageSchema = mongoose.Schema({
     text: String,
+    sentiment: String,
     author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,

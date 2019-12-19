@@ -31,7 +31,14 @@
                 <div style="width: 30%; margin: 25px auto;">
                     <form action="/chat/<%= chat._id %>/messages" method="POST">
                         <div class="form-group">
-                            <input class="form-control" type="text" name="message[text]" placeholder="text">
+                            <div class="row" style="margin-top:10px;">
+                                <textarea id="textMessage" name="message[text]" placeholder="text"></textarea>
+                                <script type="text/javascript">
+                                    $(document).ready(function() {
+                                        $("#textMessage").emojioneArea();
+                                    });
+                                </script>                                
+                            </div>                          
                         </div>
                         <div class="form-group">
                             <button class="btn btn-lg btn-primary btn-block">Send!</button>
@@ -44,9 +51,18 @@
                 <hr>
                 <% chat.messages.forEach(function(message){ %>
                     <div class="row">
-                        <div class="col-md-11">
+                        <div class="col-md-10">
                             <strong><%= message.author.username %></strong>
                             <p> <%= message.text %> </p>
+                        </div>
+                        <div class="col-md-1">
+                            <% if(message.sentiment == "positive"){ %>
+                                <h4> :) </h4>
+                            <% } else if(message.sentiment == "neutral"){ %>
+                                <h4> :| </h4>
+                            <% } else if(message.sentiment == "negative"){ %>
+                                <h4> :( </h4>
+                            <% } %>
                         </div>
                         <div class="col-md-1">
                             <% if(currentUser && message.author.id.equals(currentUser._id)){ %>

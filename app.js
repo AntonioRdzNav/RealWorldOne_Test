@@ -6,10 +6,12 @@ var express     = require("express"),
     flash       = require("connect-flash"),
     passport    = require("passport"),
     LocalStrategy = require("passport-local"),
-    methodOverride = require("method-override");
+    methodOverride = require("method-override"),
+    User        = require("./models/user");
 
 //requiring routes
-var indexRoutes      = require("./routes/index");
+var indexRoutes      = require("./routes/index"),
+    chatRoutes       = require("./routes/chat");
 
 // standard setup
 mongoose.connect("mongodb://localhost/realworld_test");
@@ -27,6 +29,9 @@ app.use(require("express-session")({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // Set "global" requests
 app.use(function(req, res, next){
@@ -38,6 +43,7 @@ app.use(function(req, res, next){
 
 
 app.use("/", indexRoutes);
+app.use("/chat", chatRoutes);
 
 
 // set connection

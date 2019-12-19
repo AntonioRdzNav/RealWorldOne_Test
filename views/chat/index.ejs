@@ -9,18 +9,18 @@
      
     <div class="col-md-6">
         <p>
-            <a class="btn btn-success btn-large" href="/chatMenu/new">Create new Chat...</a>
+            <a class="btn btn-success btn-large" href="/chat/new">Create new Chat...</a>
         </p>
         <p> My Chats: </p>
         <div class="row text-center" style="display:flex; flex-wrap: wrap;">
             <% chats.forEach(function(chat){ %>
                 <% if(chat.member1.username == currentUser.username){ %>
                     <p>
-                        <a href="/chatMenu/<%= chat._id %>" class="btn btn-primary"><%=chat.member2.username%></a>
+                        <a href="/chat/<%= chat._id %>" class="btn btn-primary"><%=chat.member2.username%></a>
                     </p>
-                <% } else {%>
+                <% } else if(chat.member2.username == currentUser.username){%>
                     <p>
-                        <a href="/chatMenu/<%= chat._id %>" class="btn btn-primary"><%=chat.member1.username%></a>
+                        <a href="/chat/<%= chat._id %>" class="btn btn-primary"><%=chat.member1.username%></a>
                     </p>
                 <% }}); %>
         </div>

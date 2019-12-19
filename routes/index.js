@@ -23,7 +23,7 @@ router.post("/register", function(req, res){
         }
         passport.authenticate("local")(req, res, function(){
             req.flash("success", "Welcome to the Chat Menu " + user.username);
-            res.redirect("/chatMenu");
+            res.redirect("/chat");
         });
     });
 });
@@ -36,7 +36,7 @@ router.get("/login", function(req, res){
 //handling login logic
 router.post("/login", passport.authenticate('local', 
     { 
-        successRedirect: '/chatMenu',
+        successRedirect: '/chat',
         successFlash: 'Welcome!',
         failureRedirect: '/login',
         failureFlash: true 

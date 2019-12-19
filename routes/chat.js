@@ -10,15 +10,15 @@ router.get("/", [middleware.isLoggedIn, middleware.setOnline], function(req, res
     Chat.find({}, function(err, allChats){
         if(err){
             req.flash("error", err.message);
-            return res.redirect("/chatMenu");
+            return res.redirect("/chat");
         } else {
             // Search all Users
             User.find({}, function(err, allUsers){
                 if(err){
                     req.flash("error", err.message);
-                    return res.redirect("/chatMenu");
+                    return res.redirect("/chat");
                 } else {
-                    res.render("chatMenu",{chats:allChats, users:allUsers});
+                    res.render("chat",{chats:allChats, users:allUsers});
                 }
             });            
         }
@@ -30,9 +30,9 @@ router.get("/new", middleware.isLoggedIn, function(req, res){
     User.find({}, function(err, allUsers){
         if(err){
             req.flash("error", err.message);
-            return res.redirect("/chatMenu");
+            return res.redirect("/chat");
         } else {
-            res.render("chatMenu/new",{users:allUsers});
+            res.render("chat/new",{users:allUsers});
         }
     });
 });
@@ -54,7 +54,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
     User.findOne({username:name2}).exec(function (err, user2) {
         if(err){
             req.flash("error", "User does not exists");
-            return res.redirect("/chatMenu");
+            return res.redirect("/chat");
         } else {
             mem2 = {id:user2._id, username:user2.username}
             var newChat = {creationDate:date, member1:mem1, member2:mem2}
@@ -62,9 +62,9 @@ router.post("/", middleware.isLoggedIn, function(req, res){
             Chat.create(newChat, function(err, newlyCreated){
                 if(err){
                     req.flash("error", err.message);
-                    return res.redirect("/chatMenu");
+                    return res.redirect("/chat");
                 } else {
-                    res.redirect("/chatMenu");
+                    res.redirect("/chat");
                 }
             });
         }
@@ -72,16 +72,16 @@ router.post("/", middleware.isLoggedIn, function(req, res){
 });
 
 // SHOW - shows more info about one campground
-router.get("/:id", function(req, res){
+router.get("/:id", middleware.checkChatOwnership, function(req, res){
     //find the campground with provided ID
-    // Chat.findById(req.params.id).populate("messages").exec(function(err, foundChat){
-    Chat.findById(req.params.id).exec(function(err, foundChat){
+    // .populate("attributeName") allows you to have access to the object attributes
+    // and not just the ObjectId itself
+    Chat.findById(req.params.id).populate("messages").exec(function(err, foundChat){
         if(err){
             console.log(err);
         } else {
-            console.log(foundChat)
             //render show template with that campground
-            res.render("chatMenu/show", {chat: foundChat});
+            res.render("chat/show", {chat: foundChat});
         }
     });
 });
@@ -90,9 +90,9 @@ router.get("/:id", function(req, res){
 router.delete("/:id", middleware.checkChatOwnership, function(req, res){
     Chat.findByIdAndRemove(req.params.id, function(err){
         if(err){
-            res.redirect("/chatMenu");
+            res.redirect("/chat");
         } else {
-            res.redirect("/chatMenu");
+            res.redirect("/chat");
         }
     });
 });

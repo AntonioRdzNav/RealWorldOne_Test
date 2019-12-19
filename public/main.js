@@ -1,2 +1,3 @@
+console.log("AQUIIIIII")
 
-$('.alert').delay(2500).fadeOut(300);
+$('.alert').delay(2000).fadeOut(300);

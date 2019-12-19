@@ -1,5 +1,6 @@
 var User = require("../models/user");
 var Chat = require("../models/chat");
+var Message = require("../models/message");
 
 // all the middleare goes here
 var middlewareObj = {};
@@ -35,6 +36,27 @@ middlewareObj.checkChatOwnership = function(req, res, next) {
                     res.redirect("back");
                 }
             }
+        });
+    } else {
+        req.flash("error", "You need to be logged in to do that");
+        res.redirect("back");
+    }
+}
+
+middlewareObj.checkMessageOwnership = function(req, res, next) {
+ if(req.isAuthenticated()){
+        Message.findById(req.params.message_id, function(err, foundMessage){
+           if(err){
+               res.redirect("back");
+           }  else {
+                // does user own the message?
+                if(foundMessage.author.id.equals(req.user._id)) {
+                    next();
+                } else {
+                    req.flash("error", "You don't have permission to do that");
+                    res.redirect("back");
+                }
+           }
         });
     } else {
         req.flash("error", "You need to be logged in to do that");

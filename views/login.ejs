@@ -1,11 +1,32 @@
 <%- include("./partials/header") %> 
 
-<h1>Login!</h1>
-<form action="/login" method="POST">
-    <input type="text" name="username" placeholder="username">
-    <input type="password" name="password" placeholder="password">
-    <input type="submit" value="Login!">
-</form>
+    <div class="row">
+        <header class="jumbotron" style="width: 50%; margin: 25px auto;">
+            <div style="width: 70%; margin: 25px auto;">
+                <h1 style="text-align: center">Login!</h1>    
+                <form action="/login" method="post">
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="username" placeholder="username">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="password" name="password" placeholder="password">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-lg btn-primary btn-block">
+                            Login
+                            <i class="fas fa-id-card"></i>
+                        </button>
+                    </div>
+                </form>
+                <a href="/">
+                    <button class="btn btn-dark">
+                        Go Back
+                        <i class="fas fa-chevron-circle-left"></i>                
+                    </button>        
+                </a>
+            </div>
+        </header>
+    </div>
 
 <%- include("./partials/footer") %>
  

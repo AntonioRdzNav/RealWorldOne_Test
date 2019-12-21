@@ -2,33 +2,61 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Test</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <meta name="author" content="Antonio Rodriguez">
+        <title>TestChat</title>
+
+        <link   rel="stylesheet" 
+                href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+                integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+                crossorigin="anonymous">
         <link rel="stylesheet" href="/emoji/emojionearea.min.css">
         <link rel="stylesheet" href="/stylesheets/main.css">
 
-        <script
-            src="https://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+                integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+                crossorigin="anonymous">
         </script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>    
-        <script type="text/javascript" src="/emoji/emojionearea.min.js"></script>          
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
+                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" 
+                crossorigin="anonymous">
+        </script>  
+        <script type="text/javascript" src="/emoji/emojionearea.min.js"></script>       
+        <script src="https://kit.fontawesome.com/5e69d5f0ac.js" crossorigin="anonymous"></script>           
     </head>
     <body>
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-between">
+        <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/">TestChat</a>
+                <a class="navbar-brand" href="/">
+                    <i class="fas fa-comments"></i>
+                    TestChat
+                    <i class="fas fa-comments"></i>
+                </a>
             </div>
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>   
+            <div class="collapse navbar-collapse" id="navbarsExample07">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/chat">Chat Menu</a>
+                    </li>
+                </ul>                
+                <ul class="navbar-nav ml-auto">
                     <% if(!currentUser){ %>
-                        <li><a href="/login">Login</a></li>
-                        <li><a href="/register">Sign Up</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/register">Sign Up</a>
+                        </li>
                     <% } else { %>
-                        <li><a href="#">Signed In As <%= currentUser.username %></a></li>
-                        <li><a href="/logout">Logout</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Signed In As <%= currentUser.username %></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout">Logout</a>
+                        </li>
                     <% } %>
                 </ul>
             </div>

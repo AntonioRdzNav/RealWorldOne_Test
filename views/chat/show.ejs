@@ -1,93 +1,106 @@
 <%- include("../partials/header") %> 
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
+    <div class="container">
 
-            <div class="thumbnail">
-                <div class="caption-full">
-                    <div class="row">                                 
-                        <div class="col-md-10">
-                            <% if(chat.member1.username == currentUser.username){ %>
-                                <h4>Chatting with: <a><%=chat.member2.username%></a></h4>
-                            <% } else {%>
-                                <h4>Chatting with: <a><%=chat.member1.username%></a></h4>
-                            <% } %>    
-                        </div>
-                        <div class="col-md-2">
-                            <button class="btn btn-xs btn-success">
-                                <a href="/chat/<%= chat._id %>/video" style="color:white">Start Video Chat</a>  
-                            </button>   
-                        </div>      
-                    </div>                       
+        <header class="jumbotron">
+            <div class="row">                                 
+                <div class="col-md-10">
+                    <% if(chat.member1.username == currentUser.username){ %>
+                        <h4>Chatting with: <a><%=chat.member2.username%></a></h4>
+                    <% } else {%>
+                        <h4>Chatting with: <a><%=chat.member1.username%></a></h4>
+                    <% } %>    
+                    <p>Creation date: <%= chat.creationDate %></p>         
+                    <a href="/chat">
+                        <button class="btn btn-dark">
+                            Go Back to Chat Menu
+                            <i class="fas fa-chevron-circle-left"></i>                
+                        </button>        
+                    </a>                                         
+                </div>    
 
-                    <div class="row">                                 
-                        <div class="col-md-10">
-                            <p>Creation date: <%= chat.creationDate %></p>
-                        </div>
-                        <div class="col-md-2">
-                            <% if(currentUser && (chat.member1.id.equals(currentUser._id)||chat.member2.id.equals(currentUser._id))){ %>
-                                <form class="delete-form" action="/chat/<%= chat._id %>?_method=DELETE" method="POST">
-                                    <button class="btn btn-xs btn-danger">Delete Chat</button>
-                                </form>
-                            <% }%>                 
-                        </div>      
-                    </div>                                         
-                </div>
-            </div>
+                <div class="col-md-2">
+                    <a href="/chat/<%= chat._id %>/video">
+                        <button class="btn btn-xs btn-success"> 
+                            <i class="fas fa-video"></i>
+                        </button> 
+                    </a>                            
+                    <% if(currentUser && (chat.member1.id.equals(currentUser._id)||chat.member2.id.equals(currentUser._id))){ %>
+                        <form class="delete-form" action="/chat/<%= chat._id %>?_method=DELETE" method="POST">
+                            <button class="btn btn-xs btn-danger">Delete Chat</button>
+                        </form>
+                    <% }%>                           
+                </div>      
+            </div>           
 
-            <div class="well">
-                <h2 style="text-align: center">Send a message...</h1>
-                <div style="width: 30%; margin: 25px auto;">
-                    <form action="/chat/<%= chat._id %>/messages" method="POST">
-                        <div class="form-group">
-                            <div class="row" style="margin-top:10px;">
-                                <textarea id="textMessage" name="message[text]" placeholder="text"></textarea>
-                                <script type="text/javascript">
-                                    $(document).ready(function() {
-                                        $("#textMessage").emojioneArea();
-                                    });
-                                </script>                                
-                            </div>                          
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-lg btn-primary btn-block">Send!</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <div>
-                <hr>
-                <% chat.messages.forEach(function(message){ %>
-                    <div class="row">
-                        <div class="col-md-10">
+        </header>
+    </div>
+    <hr>
+    <div style="margin-top: 3%;">
+        <section id="chat" class="form-dark scrollbar-dusty-grass thin square">
+            <% chat.messages.forEach(function(message){ %>
+                <div class="row" style="padding-right: 2%;">      
+                    <div class="col-sm-1"></div>    
+                    <% if (chat.member1.id.equals(message.author.id)){ %>
+                        <div class="col-sm-9" id="member1">
                             <strong><%= message.author.username %></strong>
                             <p> <%= message.text %> </p>
                         </div>
-                        <div class="col-md-1">
-                            <% if(message.sentiment == "positive"){ %>
-                                <h4> :) </h4>
-                            <% } else if(message.sentiment == "neutral"){ %>
-                                <h4> :| </h4>
-                            <% } else if(message.sentiment == "negative"){ %>
-                                <h4> :( </h4>
-                            <% } %>
+                    <% } else{ %>
+                        <div class="col-sm-9" id="member2">
+                            <strong><%= message.author.username %></strong>
+                            <p> <%= message.text %> </p>
                         </div>
-                        <div class="col-md-1">
-                            <% if(currentUser && message.author.id.equals(currentUser._id)){ %>
-                                <form class="delete-form" action="/chat/<%=chat._id %>/messages/<%=message._id %>?_method=DELETE" method="POST">
-                                    <input type="submit" class="btn btn-xs btn-danger" value="Delete">
-                                </form>
-                            <% } %>                        
-                        </div>
+                    <% } %>
+                    <div class="col-sm-1" style="text-align: center; padding: 2% 0px;">
+                        <% if(message.sentiment == "positive"){ %>
+                            <h4 class="emotion"> <i class="far fa-smile-beam"></i> </h4>
+                        <% } else if(message.sentiment == "neutral"){ %>
+                            <h4 class="emotion"> <i class="far fa-meh"></i> </h4>
+                        <% } else if(message.sentiment == "negative"){ %>
+                            <h4 class="emotion"> <i class="far fa-frown"></i> </h4>
+                        <% } %>                        
                     </div>
-                <% }) %>
-            </div>
+                    <div class="col-sm-1">
+                            <% if(currentUser && message.author.id.equals(currentUser._id)){ %>
+                            <form class="delete-form" action="/chat/<%=chat._id %>/messages/<%=message._id %>?_method=DELETE" method="POST">
+                                <button type="submit" class="btn btn-xs btn-danger">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>    
+                            </form>
+                        <% } %>   
+                    </div>
 
-            <a href="/chat">Go Back to Chat Menu</a>
-        </div>
-    </div>
-</div>
+                </div>
+            <% }) %>
+
+            <div class="well" id="send">
+                <div style="width: 85%; margin: 2% auto 3% auto;">
+                    <form action="/chat/<%= chat._id %>/messages" method="POST">
+                        <div class="form-group">
+                            <div class="row" style="margin-top:10px">                                
+                                <div class="col-md-11" style="padding-right: 0px;">
+                                    <input id="textMessage" name="message[text]" placeholder="message"></input>
+                                    <script type="text/javascript">
+                                        $(document).ready(function() {
+                                            $("#textMessage").emojioneArea();
+                                        });
+                                    </script>    
+                                </div>
+                                <div class="col-md-1" style="padding-left: 0px;">
+                                    <div class="form-group">
+                                        <button class="btn btn-info btn-circle btn-md">
+                                            <i class="fas fa-paper-plane"></i>
+                                        </button>
+                                    </div>  
+                                </div>                                                                      
+                            </div>                          
+                        </div>
+                    </form>
+                </div>
+            </div>        
+
+        </section>          
+    </div>    
 
 <%- include("../partials/footer") %>

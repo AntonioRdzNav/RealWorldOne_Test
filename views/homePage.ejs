@@ -1,9 +1,48 @@
- <%- include("./partials/header") %> 
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+        <meta name="author" content="Antonio Rodriguez">        
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>TestChat</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/stylesheets/homePage.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
+        <script src="https://kit.fontawesome.com/5e69d5f0ac.js" crossorigin="anonymous"></script>             
+	</head>
+	<body>           
 
-<h1>Home Page!</h1>
+		<div id="landing-header">
+			<h1>
+				<i class="fas fa-comments"></i>
+				Welcome to TestChat!
+				<i class="fas fa-comments"></i>
+			</h1>
+			<% if(!currentUser){ %>
+				<a class="btn btn-lg btn-default" href="/login">
+                    Login
+                    <i class="fas fa-id-card"></i>
+                </a>
+				<a class="btn btn-lg btn-default" href="/register">
+                    Sign Up
+                    <i class="fas fa-user-plus"></i>  
+                </a>
+			<% } else { %>
+				<a href="/chat" class="btn btn-lg btn-default">
+					Go to Chat!
+                    <i class="fas fa-chevron-circle-right"></i>
+				</a>
+			<% } %>			
+		</div>        
 
-<p>Welcome to TestChat</p>
-
-<a href="/chat">Go to Chat</a>
-
- <%- include("./partials/footer") %>
+		<ul class="slideshow">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+ 
+	</body>
+</html>

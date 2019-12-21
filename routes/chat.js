@@ -25,7 +25,7 @@ router.get("/", [middleware.isLoggedIn, middleware.setOnline], function(req, res
     });    
 });
 
-//NEW - show form to create new campground
+//NEW - show form to create new chat
 router.get("/new", middleware.isLoggedIn, function(req, res){
     User.find({}, function(err, allUsers){
         if(err){
@@ -37,9 +37,9 @@ router.get("/new", middleware.isLoggedIn, function(req, res){
     });
 });
 
-//CREATE - add new campground to DB 
+//CREATE - add new chat to DB 
 router.post("/", middleware.isLoggedIn, function(req, res){
-    // get data from form and add to campgrounds array
+    // get data from form and add to chat array
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -71,28 +71,38 @@ router.post("/", middleware.isLoggedIn, function(req, res){
     });
 });
 
-// SHOW - shows more info about one campground
-router.get("/:id", middleware.checkChatOwnership, function(req, res){
-    //find the campground with provided ID
+// SHOW - shows more info about one chat
+router.get("/:id", [middleware.isLoggedIn, middleware.checkChatOwnership], function(req, res){
+    //find the chat with provided ID
     // .populate("attributeName") allows you to have access to the object attributes
     // and not just the ObjectId itself
     Chat.findById(req.params.id).populate("messages").exec(function(err, foundChat){
         if(err){
             console.log(err);
         } else {
-            //render show template with that campground
             res.render("chat/show", {chat: foundChat});
         }
     });
 });
 
 // DESTROY CAMPGROUND ROUTE
-router.delete("/:id", middleware.checkChatOwnership, function(req, res){
+router.delete("/:id", [middleware.isLoggedIn, middleware.checkChatOwnership], function(req, res){
     Chat.findByIdAndRemove(req.params.id, function(err){
         if(err){
             res.redirect("/chat");
         } else {
             res.redirect("/chat");
+        }
+    });
+});
+
+// SHOW - shows video chat
+router.get("/:id/video", [middleware.isLoggedIn, middleware.checkChatOwnership], function(req, res){
+    Chat.findById(req.params.id).populate("messages").exec(function(err, foundChat){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("chat/video", {chat: foundChat});
         }
     });
 });

@@ -32,7 +32,7 @@ router.post("/", [middleware.isLoggedIn, middleware.checkChatOwnership],function
                         var newAuthor = {id:req.user._id, username:req.user.username}
                         message.author = newAuthor;
                         message.sentiment = response.polarity;
-                        //save comment
+                        //save message
                         message.save();
                         chat.messages.push(message);
                         chat.save();

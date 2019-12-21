@@ -26,19 +26,17 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <% if(chat.member1.username == currentUser.username){ %>
-                <video id="video" width="100%" height="100%" autoplay></video>
-            <% } %>
+                <video id="video1" width="100%" height="100%" autoplay></video>
         </div>
         <div class="col-md-6">
-            <% if(chat.member2.username == currentUser.username){ %>
-                <video id="video" width="100%" height="100%" autoplay></video>
-            <% } %>
+                <video id="video2" width="100%" height="100%" autoplay></video>
         </div>
     </div>    
 </div>
 
-
-
+<!-- After computing this scripts, google asks permission to use camera and audio -->
+<!-- Scripts are here, because only the 2 authorized id's can access this route -->
+<script type="text/javascript" src="/videoServer.js"></script>
+<script type="text/javascript" src="/bundle.js"></script>    
 
 <%- include("../partials/footer") %>

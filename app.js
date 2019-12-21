@@ -13,6 +13,7 @@ var express         = require("express"),
 var indexRoutes      = require("./routes/index"),
     chatMenuRoutes   = require("./routes/chat"),
     messageRoutes    = require("./routes/messages");
+    // videoServer    = require("./public/videoServer");
 
 // standard setup
 mongoose.connect("mongodb://localhost/realworld_test");
@@ -46,6 +47,7 @@ app.use(function(req, res, next){
 app.use("/", indexRoutes);
 app.use("/chat", chatMenuRoutes);
 app.use("/chat/:id/messages", messageRoutes);
+// app.use(videoServer);
 app.get('*', function(req, res) {
     res.redirect('/');
 });

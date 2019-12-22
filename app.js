@@ -66,8 +66,8 @@ app.get('*', function(req, res) {
 
 
 // set connection (PORT is now assigned by Heroku)
-// PORT = 3000 
-app.listen(process.env.PORT, function(){
+var PORT = process.env.PORT || 3000; 
+app.listen(PORT, function(){
    console.log("The Server Has Started!");
 });
 

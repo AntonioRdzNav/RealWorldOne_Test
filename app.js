@@ -13,10 +13,16 @@ var express         = require("express"),
 var indexRoutes      = require("./routes/index"),
     chatMenuRoutes   = require("./routes/chat"),
     messageRoutes    = require("./routes/messages");
-    // videoServer    = require("./public/videoServer");
 
 // Connect to online mongoDB Server
-mongoose.connect("mongodb+srv://RealWorldOne_Test:Lucamigo%2F%409856@cluster0-prhko.mongodb.net/test?retryWrites=true&w=majority", {
+// mongoose.connect("mongodb://localhost/realworld_test");
+
+// process.env.DATABASEURL   has to be given a value, 
+// in heroku is already set but locally has to be done through "export DATABASEURL = <url>"   (NOT ANYMORE)
+
+var url = process.env.DATABASEURL || "mongodb://localhost/realworld_test";
+
+mongoose.connect(url, {
     useNewUrlParser: true,
     useCreateIndex: true
 }).then(() => {
@@ -55,7 +61,6 @@ app.use(function(req, res, next){
 app.use("/", indexRoutes);
 app.use("/chat", chatMenuRoutes);
 app.use("/chat/:id/messages", messageRoutes);
-// app.use(videoServer);
 app.get('*', function(req, res) {
     res.redirect('/');
 });

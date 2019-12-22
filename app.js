@@ -22,7 +22,7 @@ var indexRoutes      = require("./routes/index"),
 
 // var url = process.env.DATABASEURL || "mongodb://localhost/realworld_test";
 
-mongoose.connect("mongodb+srv://antoniordznav:lucamigo@cluster0-prhko.mongodb.net/test?retryWrites=true&w=majority", {
+mongoose.connect("mongodb://antoniordznav:lucamigo@cluster0-prhko.mongodb.net/test?retryWrites=true&w=majority", {
     useNewUrlParser: true
 }).then(() => {
     console.log("Connected to Mongoose DB");

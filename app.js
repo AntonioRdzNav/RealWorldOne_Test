@@ -20,11 +20,10 @@ var indexRoutes      = require("./routes/index"),
 // process.env.DATABASEURL   has to be given a value, 
 // in heroku is already set but locally has to be done through "export DATABASEURL = <url>"   (NOT ANYMORE)
 
-var url = process.env.DATABASEURL || "mongodb://localhost/realworld_test";
+// var url = process.env.DATABASEURL || "mongodb://localhost/realworld_test";
 
-mongoose.connect(url, {
-    useNewUrlParser: true,
-    useCreateIndex: true
+mongoose.connect("mongodb+srv://antoniordznav:lucamigo@cluster0-prhko.mongodb.net/test?retryWrites=true&w=majority", {
+    useNewUrlParser: true
 }).then(() => {
     console.log("Connected to Mongoose DB");
 }).catch(err => {

@@ -20,9 +20,9 @@ var indexRoutes      = require("./routes/index"),
 // process.env.DATABASEURL   has to be given a value, 
 // in heroku is already set but locally has to be done through "export DATABASEURL = <url>"   (NOT ANYMORE)
 
-// var url = process.env.DATABASEURL || "mongodb://localhost/realworld_test";
+var url = process.env.DATABASEURL || "mongodb://localhost/realworld_test";
 
-mongoose.connect("mongodb+srv://antoniordznav:lucamigo@cluster0-prhko.mongodb.net/test?retryWrites=true&w=majority", {
+mongoose.connect(url, {
     useNewUrlParser: true
 }).then(() => {
     console.log("Connected to Mongoose DB");
@@ -65,9 +65,9 @@ app.get('*', function(req, res) {
 });
 
 
-// set connection
-PORT = 3000
-app.listen(PORT, function(){
+// set connection (PORT is now assigned by Heroku)
+// PORT = 3000 
+app.listen(process.env.PORT, function(){
    console.log("The Server Has Started!");
 });
 

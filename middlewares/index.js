@@ -24,7 +24,7 @@ middlewareObj.setOnline = function(req, res, next){
 middlewareObj.checkChatOwnership = function(req, res, next) {
     if(req.isAuthenticated()){
         Chat.findById(req.params.id, function(err, foundChat){
-            if(err){
+            if(err || foundChat==null){
                 req.flash("error", "Chat not found");
                 res.redirect("back");
             }  else {
@@ -41,7 +41,7 @@ middlewareObj.checkChatOwnership = function(req, res, next) {
         req.flash("error", "You need to be logged in to do that");
         res.redirect("back");
     }
-}
+} 
 
 middlewareObj.checkMessageOwnership = function(req, res, next) {
  if(req.isAuthenticated()){

@@ -23,7 +23,9 @@ var indexRoutes      = require("./routes/index"),
 var url = process.env.DATABASEURL || "mongodb://localhost/realworld_test";
 
 mongoose.connect(url, {
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useFindAndModify:false,
+    useUnifiedTopology: true
 }).then(() => {
     console.log("Connected to Mongoose DB");
 }).catch(err => {

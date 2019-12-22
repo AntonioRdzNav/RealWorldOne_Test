@@ -72,35 +72,33 @@
                     </div>
 
                 </div>
-            <% }) %>
-
-            <div class="well" id="send">
-                <div style="width: 85%; margin: 2% auto 3% auto;">
-                    <form action="/chat/<%= chat._id %>/messages" method="POST">
-                        <div class="form-group">
-                            <div class="row" style="margin-top:10px">                                
-                                <div class="col-md-11" style="padding-right: 0px;">
-                                    <input id="textMessage" name="message[text]" placeholder="message"></input>
-                                    <script type="text/javascript">
-                                        $(document).ready(function() {
-                                            $("#textMessage").emojioneArea();
-                                        });
-                                    </script>    
-                                </div>
-                                <div class="col-md-1" style="padding-left: 0px;">
-                                    <div class="form-group">
-                                        <button class="btn btn-info btn-circle btn-md">
-                                            <i class="fas fa-paper-plane"></i>
-                                        </button>
-                                    </div>  
-                                </div>                                                                      
-                            </div>                          
-                        </div>
-                    </form>
-                </div>
-            </div>        
-
-        </section>          
+            <% }) %>     
+        </section>        
+        <div class="well" id="send">
+            <div style="width: 85%; margin: 2% auto 3% auto;">
+                <form action="/chat/<%= chat._id %>/messages" method="POST">
+                    <div class="form-group">
+                        <div class="row" style="margin-top:10px">                                
+                            <div class="col-md-11" style="padding-right: 0px;">
+                                <input id="textMessage" name="message[text]" placeholder="message"></input>
+                                <script type="text/javascript">
+                                    $(document).ready(function() {
+                                        $("#textMessage").emojioneArea();
+                                    });
+                                </script>    
+                            </div>
+                            <div class="col-md-1" style="padding-left: 0px;">
+                                <div class="form-group">
+                                    <button class="btn btn-info btn-circle btn-md">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>  
+                            </div>                                                                      
+                        </div>                          
+                    </div>
+                </form>
+            </div>
+        </div>             
     </div>    
 
 <%- include("../partials/footer") %>

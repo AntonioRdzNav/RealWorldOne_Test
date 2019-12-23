@@ -18,7 +18,7 @@ if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         const signalhub = require("signalhub");
         const createSwarm = require("webrtc-swarm");
     //Creates the Signal rub running in the mentioned port
-        const hub = signalhub('my-game', ['http://localhost:8080']);
+        const hub = signalhub('videochat', ['https://realworldone-test.herokuapp.com']);
         const swarm = createSwarm(hub, {
             stream: stream
         });

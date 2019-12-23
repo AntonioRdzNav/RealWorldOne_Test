@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js & signalhub listen -p 8080"
+    "start": "node app.js & signalhub listen -p 5000"
   },
   "repository": {
     "type": "git",
